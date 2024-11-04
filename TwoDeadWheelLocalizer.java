@@ -12,6 +12,7 @@ import com.acmerobotics.roadrunner.ftc.FlightRecorder;
 import com.acmerobotics.roadrunner.ftc.OverflowEncoder;
 import com.acmerobotics.roadrunner.ftc.PositionVelocityPair;
 import com.acmerobotics.roadrunner.ftc.RawEncoder;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -26,8 +27,8 @@ import org.firstinspires.ftc.teamcode.messages.TwoDeadWheelInputsMessage;
 @Config
 public final class TwoDeadWheelLocalizer implements Localizer {
     public static class Params {
-        public double parYTicks = 0.0; // y position of the parallel encoder (in tick units)
-        public double perpXTicks = 0.0; // x position of the perpendicular encoder (in tick units)
+        public double parYTicks = -1066.0866264401195; // y position of the parallel encoder (in tick units)
+        public double perpXTicks = -3773.9347764084455; // x position of the perpendicular encoder (in tick units)
     }
 
     public static Params PARAMS = new Params();
@@ -47,8 +48,19 @@ public final class TwoDeadWheelLocalizer implements Localizer {
         // TODO: make sure your config has **motors** with these names (or change them)
         //   the encoders should be plugged into the slot matching the named motor
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
-        par = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "par")));
-        perp = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "perp")));
+        DcMotorEx parEncoder = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        DcMotorEx perpEncoder = hardwareMap.get(DcMotorEx.class, "rearRight");
+
+        parEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        perpEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        parEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        perpEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        par = new OverflowEncoder(new RawEncoder(parEncoder));
+        perp = new OverflowEncoder(new RawEncoder(perpEncoder));
+
+        par.setDirection(DcMotor.Direction.REVERSE);
+        perp.setDirection(DcMotor.Direction.REVERSE);
 
         // TODO: reverse encoder directions if needed
         //   par.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -63,6 +75,7 @@ public final class TwoDeadWheelLocalizer implements Localizer {
     public Twist2dDual<Time> update() {
         PositionVelocityPair parPosVel = par.getPositionAndVelocity();
         PositionVelocityPair perpPosVel = perp.getPositionAndVelocity();
+
 
         YawPitchRollAngles angles = imu.getRobotYawPitchRollAngles();
         // Use degrees here to work around https://github.com/FIRST-Tech-Challenge/FtcRobotController/issues/1070

@@ -91,7 +91,6 @@ public class Testing2_19829 extends OpMode {
 
         IntakeRotator.setDirection(Servo.Direction.FORWARD);
         Outtake.setDirection(Servo.Direction.FORWARD);
-
         Lifter.setDirection(DcMotorEx.Direction.REVERSE);
         Extendo.setDirection(DcMotorEx.Direction.REVERSE);
 
