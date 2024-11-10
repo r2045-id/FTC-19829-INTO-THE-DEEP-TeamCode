@@ -186,6 +186,7 @@ public class Testing2_19829 extends OpMode {
         double drive = -gamepad1.left_stick_y;
         double turn = gamepad1.right_stick_x;
 
+        // 0.685
         double defspeed = gamepad1.left_trigger > 0 ? 1.0 : 0.6;
 
         FrontLeft_Motor.setPower(Range.clip(turn + drive + slide, -1.0, 1.0) * defspeed);

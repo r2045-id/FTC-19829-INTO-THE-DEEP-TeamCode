@@ -15,7 +15,7 @@ public class ServoTester extends OpMode {
 
     private double clawPos = 0;
     private double clawRotatorPos = 0;
-    private  double armPivotPos = 0;
+    private  double armPivotPos = 0.57;
     private  double bucketRotatorPos = 0;
     private  double bucketPos = 0;
     private  double specimentPos = 0;
@@ -35,7 +35,7 @@ public class ServoTester extends OpMode {
     public void start() {
         claw.setPosition(clawPos);
         clawRotator.setPosition(clawRotatorPos);
-        armPivot.setPosition(armPivotPos);
+        armPivot.setPosition(0.57);
         bucketRotator.setPosition(bucketRotatorPos);
         bucket.setPosition(bucketPos);
 
@@ -46,40 +46,40 @@ public class ServoTester extends OpMode {
     public void loop() {
 
         if (gamepad1.dpad_up && clawPos <= 1) {
-            clawPos += 0.05;
-        }else if (gamepad1.dpad_down && clawPos >= -1) {
-            clawPos -= 0.05;
+            clawPos += 0.005;
+        }else if (gamepad1.dpad_down && clawPos >= 0) {
+            clawPos -= 0.005;
         }
 
         if (gamepad1.dpad_right && clawRotatorPos <= 1) {
-            clawRotatorPos += 0.05;
-        }else if (gamepad1.dpad_left && clawRotatorPos >= -1) {
-            clawRotatorPos -= 0.05;
+            clawRotatorPos += 0.005;
+        }else if (gamepad1.dpad_left && clawRotatorPos >= 0) {
+            clawRotatorPos -= 0.005;
         }
 
         if (gamepad2.dpad_right && armPivotPos <= 1) {
-            armPivotPos += 0.05;
-        }else if (gamepad2.dpad_left && armPivotPos >= -1) {
-            armPivotPos -= 0.05;
+            armPivotPos += 0.005;
+        }else if (gamepad2.dpad_left && armPivotPos >= 0) {
+            armPivotPos -= 0.005;
         }
 
         if (gamepad2.dpad_up && bucketRotatorPos <= 1) {
-            bucketRotatorPos += 0.05;
-        }else if (gamepad2.dpad_down && bucketRotatorPos >= -1) {
-            bucketRotatorPos -= 0.05;
+            bucketRotatorPos += 0.005;
+        }else if (gamepad2.dpad_down && bucketRotatorPos >= 0) {
+            bucketRotatorPos -= 0.005;
         }
 
 
         if (gamepad2.y && bucketPos <= 1) {
-            bucketPos += 0.05;
-        }else if (gamepad2.a && bucketPos >= -1) {
-            bucketPos -= 0.05;
+            bucketPos += 0.005;
+        }else if (gamepad2.a && bucketPos >= 0) {
+            bucketPos -= 0.005;
         }
 
         if (gamepad2.x && specimentPos <= 1) {
-            specimentPos += 0.05;
-        }else if (gamepad2.b && specimentPos >= -1) {
-            specimentPos -= 0.05;
+            specimentPos += 0.005;
+        }else if (gamepad2.b && specimentPos >= 0) {
+            specimentPos -= 0.005;
         }
 
         claw.setPosition(clawPos);
